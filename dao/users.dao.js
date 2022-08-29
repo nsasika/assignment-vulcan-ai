@@ -10,6 +10,17 @@ class UsersDAO {
       return apiResponse.errorResponse(error.message);
     }
   }
+
+  static async getUser(obj) {
+    try {
+      return await User.findOne({
+        where: obj,
+      });
+    } catch (error) {
+      console.log(`UsersDAO getUser error , ${error.message}`);
+      return apiResponse.errorResponse(error.message);
+    }
+  }
 }
 
 module.exports = UsersDAO;
