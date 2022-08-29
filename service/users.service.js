@@ -21,6 +21,20 @@ class UsersService {
       return apiResponse.errorResponse(error);
     }
   }
+
+  static async createUser({ firstName, lastName, email, password }) {
+    try {
+      return await usersDAO.createUser({
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+    } catch (error) {
+      console.log(`UsersService createUser error , ${error}`);
+      return apiResponse.errorResponse(error);
+    }
+  }
 }
 
 module.exports = UsersService;

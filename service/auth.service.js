@@ -5,6 +5,22 @@ const apiResponse = require("../consts/api.response");
 const usersSerive = require("../service/users.service");
 
 class AuthService {
+  static async register(req, res, next) {
+    const { firstName, lastName, email, password } = req.body;
+    let { data: user } = await usersSerive.getUser({ email: email });
+    if (user) return res.status(409).json({ message: "email already exists" });
+
+    bcrypt.hash(password, null, null, (err, hash) => {
+      if (err) res.status(409).json({ message: "can not create user" });
+
+      usersSerive
+        .createUser({ firstName, lastName, email, password })
+        .then((user) =>
+          res.status(200).json({ user, msg: "account created successfully" })
+        );
+    });
+  }
+
   static async login(req, res, next) {
     try {
       const { email, password } = req.body;

@@ -21,6 +21,15 @@ class UsersDAO {
       return apiResponse.errorResponse(error.message);
     }
   }
+
+  static async createUser({ firstName, lastName, email, password }) {
+    try {
+      return await User.create({ firstName, lastName, email, password });
+    } catch (error) {
+      console.log(`UsersDAO createUser error , ${error.message}`);
+      return apiResponse.errorResponse(error.message);
+    }
+  }
 }
 
 module.exports = UsersDAO;
