@@ -4,15 +4,13 @@ const bcrypt = require('bcrypt-nodejs');
 const jwt = require("jsonwebtoken");
 const { jwtOptions } = require('../config/jwtOptions');
 
-const createUser = async ({ firstName, lastName, email, password }) => {
-    return await User.create({ firstName, lastName, email, password });
-};
+const createUser = async ({ firstName, lastName, email, password }) =>
+    await User.create({ firstName, lastName, email, password });
 
-const getUser = async obj => {
-    return await User.findOne({
+const getUser = async obj =>
+    await User.findOne({
         where: obj,
     });
-};
 
 router.post('/login', async function (req, res, next) {
     const { email, password } = req.body;
@@ -52,6 +50,5 @@ router.post('/register', async function (req, res, next) {
             res.status(200).json({ user, msg: 'account created successfully' }));
     })
 });
-
 
 module.exports = router;

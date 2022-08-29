@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 const User = require('./models/User');
 const checkAuth = require('./middleware/checkAuth');
-const userRoutes = require('./routes/user');
-const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/users.route');
+const authRoutes = require('./routes/auth.route');
 const passport = require('passport');
 const strategy = require('./config/jwtOptions');
 const bodyParser = require('body-parser');
@@ -40,6 +40,6 @@ passport.use("strategy", strategy);
 
 app.use('/auth', authRoutes);
 
-app.use('/user', checkAuth, userRoutes);
+app.use('/users', checkAuth, userRoutes);
 
 module.exports = app;
