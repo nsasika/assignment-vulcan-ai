@@ -1,9 +1,9 @@
 const { errorResponse, successResponse } = require("../consts/response");
-const usersDAO = require("../dao/users.dao");
+const User = require("../models/User");
 
 const getAllUsers = async () => {
   try {
-    const users = await usersDAO.getAllUsers();
+    const users = await User.findAll();
     return successResponse(users);
   } catch (error) {
     console.log(`UsersService getAllUsers error , ${error}`);
@@ -13,7 +13,9 @@ const getAllUsers = async () => {
 
 const getUser = async (obj) => {
   try {
-    return await usersDAO.getUser(obj);
+    return await User.findOne({
+      where: obj,
+    });
   } catch (error) {
     console.log(`UsersService getUser error , ${error.message}`);
     return errorResponse(error.message);
@@ -22,7 +24,7 @@ const getUser = async (obj) => {
 
 const createUser = async (obj) => {
   try {
-    const user = await usersDAO.createUser(obj);
+    const user = await User.create(obj);
     return successResponse(user);
   } catch (error) {
     console.log(`UsersService createUser error , ${error}`);
