@@ -17,19 +17,14 @@ class UsersService {
       const user = await usersDAO.getUser(obj);
       return apiResponse.successResponse(user);
     } catch (error) {
-      console.log(`UsersService getUser error , ${error}`);
-      return apiResponse.errorResponse(error);
+      console.log(`UsersService getUser error , ${error.message}`);
+      return apiResponse.errorResponse(error.message);
     }
   }
 
-  static async createUser({ firstName, lastName, email, password }) {
+  static async createUser(obj) {
     try {
-      return await usersDAO.createUser({
-        firstName,
-        lastName,
-        email,
-        password,
-      });
+      return await usersDAO.createUser(obj);
     } catch (error) {
       console.log(`UsersService createUser error , ${error}`);
       return apiResponse.errorResponse(error);

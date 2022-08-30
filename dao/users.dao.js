@@ -22,9 +22,9 @@ class UsersDAO {
     }
   }
 
-  static async createUser({ firstName, lastName, email, password }) {
+  static async createUser(obj) {
     try {
-      return await User.create({ firstName, lastName, email, password });
+      return await User.create(obj);
     } catch (error) {
       console.log(`UsersDAO createUser error , ${error.message}`);
       return apiResponse.errorResponse(error.message);
