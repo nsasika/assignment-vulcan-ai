@@ -1,8 +1,13 @@
+const { validationResult } = require("express-validator");
 const AuthService = require("../service/auth.service");
 
 class AuthController {
   static async register(req, res, next) {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty())
+        return res.status(400).json({ errors: errors.array() });
+
       return await AuthService.register(req, res, next);
     } catch (error) {
       console.log(`AuthController register error , ${error.message}`);

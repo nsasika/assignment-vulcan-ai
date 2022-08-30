@@ -7,6 +7,7 @@ const authRoutes = require("./routes/auth.route");
 const passport = require("passport");
 const strategy = require("./config/jwtOptions");
 const bodyParser = require("body-parser");
+const db = require("./config/database");
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -22,15 +23,13 @@ app.use((req, res, next) => {
   next();
 });
 
-const db = require("./config/database");
-
 db.authenticate()
   .then(() => console.log("Database connected..."))
-  .catch((err) => console.log("Error: " + err));
+  .catch((err) => console.log(`Error: ${err}`));
 
 User.sync({ alter: true })
   .then(() => console.log("User table created successfully"))
-  .catch((err) => console.log("User table not created,  error"));
+  .catch((err) => console.log(`User table not created,  error ${err}`));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
