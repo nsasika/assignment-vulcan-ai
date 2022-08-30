@@ -1,23 +1,17 @@
 const bcrypt = require("bcrypt-nodejs");
 const { errorResponse } = require("../consts/response");
-const UsersSerive = require("../service/users.service");
+const { createUser, getUser } = require("../service/users.service");
 const { bcryptLogin, bcryptHash } = require("../helpers/bcrypt");
 
 const register = async (req, res, next) => {
   try {
     const { username, email, password, address } = req.body;
-    let user = await UsersSerive.getUser({ email: email });
+    let user = await getUser({ email: email });
 
     if (user) return res.status(409).json({ message: "email already exists" });
 
     bcrypt.hash(password, null, null, (err, hash) =>
-      bcryptHash(
-        err,
-        hash,
-        res,
-        { username, email, address },
-        UsersSerive.createUser
-      )
+      bcryptHash(err, hash, res, { username, email, address }, createUser)
     );
   } catch (error) {
     console.log(`AuthService register error , ${error}`);
@@ -29,7 +23,7 @@ const login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
     if (username && password) {
-      let user = await UsersSerive.getUser({ username });
+      let user = await getUser({ username });
 
       if (!user)
         return res.status(404).json({
