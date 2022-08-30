@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt-nodejs");
 const { jwtOptions } = require("../config/jwtOptions");
-const apiResponse = require("../consts/api.response");
+const response = require("../consts/response");
 const usersSerive = require("../service/users.service");
 
 class AuthService {
@@ -39,7 +39,7 @@ class AuthService {
       }
     } catch (error) {
       console.log(`AuthService login error , ${error}`);
-      return apiResponse.errorResponse(error);
+      return response.errorResponse(error);
     }
   }
 }

@@ -1,24 +1,24 @@
-const apiResponse = require("../consts/api.response");
+const response = require("../consts/response");
 const usersDAO = require("../dao/users.dao");
 
 class UsersService {
   static async getAllUsers() {
     try {
       const users = await usersDAO.getAllUsers();
-      return apiResponse.successResponse(users);
+      return response.successResponse(users);
     } catch (error) {
       console.log(`UsersService getAllUsers error , ${error}`);
-      return apiResponse.errorResponse(error);
+      return response.errorResponse(error);
     }
   }
 
   static async getUser(obj) {
     try {
       const user = await usersDAO.getUser(obj);
-      return apiResponse.successResponse(user);
+      return response.successResponse(user);
     } catch (error) {
       console.log(`UsersService getUser error , ${error.message}`);
-      return apiResponse.errorResponse(error.message);
+      return response.errorResponse(error.message);
     }
   }
 
@@ -27,7 +27,7 @@ class UsersService {
       return await usersDAO.createUser(obj);
     } catch (error) {
       console.log(`UsersService createUser error , ${error}`);
-      return apiResponse.errorResponse(error);
+      return response.errorResponse(error);
     }
   }
 }

@@ -1,16 +1,11 @@
 const UsersService = require("../service/users.service");
-const apiStatus = require("../consts/api.status");
+const checkAndReturnResponse = require("../utils/util");
 
 class UsersController {
   static async getAllUsers(req, res, next) {
     try {
       const { status, data, error } = await UsersService.getAllUsers();
-      switch (status) {
-        case apiStatus.SUCCESS:
-          return res.status(200).json(data);
-        case apiStatus.FAIL:
-          return res.status(500).json({ status, error: error.message });
-      }
+      checkAndReturnResponse(res, status, data, error);
     } catch (error) {
       console.log(`UsersController getAllUsers error , ${error}`);
       res.status(500).json({ error: error.message });
@@ -20,12 +15,7 @@ class UsersController {
   static async getUser(obj) {
     try {
       const { status, data, error } = await UsersController.getUser(obj);
-      switch (status) {
-        case apiStatus.SUCCESS:
-          return res.status(200).json(data);
-        case apiStatus.FAIL:
-          return res.status(500).json({ status, error: error.message });
-      }
+      checkAndReturnResponse(res, status, data, error);
     } catch (error) {
       console.log(`UsersController getUser error , ${error}`);
       res.status(500).json({ error: error.message });
