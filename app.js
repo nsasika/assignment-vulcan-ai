@@ -8,6 +8,10 @@ const passport = require("passport");
 const strategy = require("./config/jwtOptions");
 const bodyParser = require("body-parser");
 const db = require("./config/database");
+const { initialize } = require("express-openapi");
+const swaggerUi = require("swagger-ui-express");
+
+const port = process.env.PORT || 3000;
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -39,5 +43,27 @@ passport.use("strategy", strategy);
 app.use("/auth", authRoutes);
 
 app.use("/users", checkAuth, userRoutes);
+
+// OpenAPI routes
+initialize({
+  app,
+  apiDoc: require("./api/api-doc"),
+  paths: "./api/paths",
+});
+
+// OpenAPI UI
+app.use(
+  "/api-documentation",
+  swaggerUi.serve,
+  swaggerUi.setup(null, {
+    swaggerOptions: {
+      url: `http://localhost:${port}/api-docs`,
+    },
+  })
+);
+
+console.log(
+  `OpenAPI documentation available in http://localhost:${port}/api-documentation`
+);
 
 module.exports = app;
