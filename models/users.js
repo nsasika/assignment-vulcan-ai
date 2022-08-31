@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const db = require("../config/database");
+const Advertisement = require("./advertisements");
 
 const User = db.define("user", {
   email: {
@@ -21,5 +22,8 @@ const User = db.define("user", {
     allowNull: false,
   },
 });
+
+User.hasMany(Advertisement);
+Advertisement.belongsTo(User);
 
 module.exports = User;
