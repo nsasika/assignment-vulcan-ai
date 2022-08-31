@@ -14,6 +14,7 @@
     "body-parser": "^1.19.0",
     "dotenv": "^16.0.1",
     "express": "^4.17.1",
+    "express-openapi": "^12.0.1",
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.1.0",
@@ -21,6 +22,7 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "sequelize": "^5.21.3",
-    "sqlite3": "^5.0.11"
+    "sqlite3": "^5.0.11",
+    "swagger-ui-express": "^4.5.0"
   }
 }
