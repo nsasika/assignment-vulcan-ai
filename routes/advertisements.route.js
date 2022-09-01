@@ -10,6 +10,7 @@ router
 router
   .route("/:id")
   .get(AdvertisementsCtrl.getAdvertisement)
+  .patch(AdvertisementsCtrl.updateAdvertisementContent)
   .delete(AdvertisementsCtrl.deleteContent);
 
 module.exports = router;
