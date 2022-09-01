@@ -67,7 +67,11 @@ const getAdvertisementById = async (id) => {
 const getAdvertisements = async () => {
   try {
     const advertisements = await Advertisement.findAll({ include: [Content] });
-    if (advertisements) return responseMapper(200, advertisements);
+    if (advertisements)
+      return responseMapper(200, {
+        advertisements,
+        total: advertisements.length,
+      });
     else return responseMapper(500, null, "Unable to retrieve advertisements");
   } catch (error) {
     console.log(`AdvertisementService getAdvertisements error , ${error}`);

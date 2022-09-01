@@ -8,7 +8,7 @@ const User = require("../models/users");
 const getAllUsers = async () => {
   try {
     const users = await User.findAll();
-    if (users) return responseMapper(200, { users, totalUsers: users.length });
+    if (users) return responseMapper(200, { users, total: users.length });
     else return responseMapper(404, null, "No users found");
   } catch (error) {
     console.log(`UsersService getAllUsers error , ${error}`);
