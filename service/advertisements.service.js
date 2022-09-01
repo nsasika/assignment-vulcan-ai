@@ -21,11 +21,23 @@ const createAdvertisement = async (obj) => {
           return { url: content, advertisementId: advertisement.id };
         });
         await bulkCreateContent(images);
-        const res = await getAdvertisementById(advertisement.id);
-        return responseMapper(200, res);
-      } else return responseMapper(500, "Unable to create Advertisement");
+        const { statusCode, data } = await getAdvertisementById(
+          advertisement.id
+        );
+        if (statusCode === 200) return responseMapper(200, data);
+        else
+          return responseMapper(
+            404,
+            null,
+            "Unable to retrieve created advertisement details"
+          );
+      } else return responseMapper(500, null, "Unable to create Advertisement");
     } else
-      return responseMapper(404, "User Not found!, please register user first");
+      return responseMapper(
+        404,
+        null,
+        "User Not found!, please register user first"
+      );
   } catch (error) {
     console.log(`AdvertisementService createAdvertisement error , ${error}`);
     return errorResponse(error.message);
@@ -34,7 +46,18 @@ const createAdvertisement = async (obj) => {
 
 const getAdvertisementById = async (id) => {
   try {
-    return await Advertisement.findOne({ where: { id }, include: [Content] });
+    const advertisement = await Advertisement.findOne({
+      where: { id },
+      include: [Content],
+    });
+
+    if (advertisement) return responseMapper(200, advertisement);
+    else
+      return responseMapper(
+        404,
+        null,
+        "Unable to retrieve advertisement details"
+      );
   } catch (error) {
     console.log(`AdvertisementService getAdvertisementById error , ${error}`);
     return errorResponse(error);
@@ -45,7 +68,7 @@ const getAdvertisements = async () => {
   try {
     const advertisements = await Advertisement.findAll({ include: [Content] });
     if (advertisements) return responseMapper(200, advertisements);
-    else return responseMapper(500, "Unable to retrieve advertisements");
+    else return responseMapper(500, null, "Unable to retrieve advertisements");
   } catch (error) {
     console.log(`AdvertisementService getAdvertisements error , ${error}`);
     return errorResponse(error);
