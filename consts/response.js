@@ -8,4 +8,8 @@ const errorResponse = (error) => {
   return { status: status.FAIL, error };
 };
 
-module.exports = { successResponse, errorResponse };
+const responseMapper = (statusCode, data, res) => {
+  return { statusCode, data, res };
+};
+
+module.exports = { successResponse, errorResponse, responseMapper };

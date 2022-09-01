@@ -1,4 +1,4 @@
-const SUCCESS = "SUCCESS"
-const FAIL = "FAIL"
+const SUCCESS = "SUCCESS";
+const FAIL = "FAIL";
 
-module.exports = { SUCCESS, FAIL }
+module.exports = { SUCCESS, FAIL };

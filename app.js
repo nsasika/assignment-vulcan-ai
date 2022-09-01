@@ -1,17 +1,18 @@
 const express = require("express");
 const app = express();
-const Users = require("./models/users");
-const Advertisements = require("./models/advertisements");
-const Contents = require("./models/contents");
-const checkAuth = require("./middleware/checkAuth");
-const userRoutes = require("./routes/users.route");
-const authRoutes = require("./routes/auth.route");
-const passport = require("passport");
-const strategy = require("./config/jwtOptions");
 const bodyParser = require("body-parser");
-const db = require("./config/database");
 const { initialize } = require("express-openapi");
 const swaggerUi = require("swagger-ui-express");
+
+const { excuteDb } = require("./helpers/database");
+
+const passport = require("passport");
+const strategy = require("./config/jwtOptions");
+const checkAuth = require("./middleware/checkAuth");
+
+const userRoutes = require("./routes/users.route");
+const authRoutes = require("./routes/auth.route");
+const advertisementRoutes = require("./routes/advertisements.route");
 
 const port = process.env.PORT || 3000;
 
@@ -29,23 +30,7 @@ app.use((req, res, next) => {
   next();
 });
 
-db.authenticate()
-  .then(() => console.log("Database connected..."))
-  .catch((err) => console.log(`Error: ${err}`));
-
-Users.sync({ alter: true })
-  .then(() => console.log("User table created successfully"))
-  .catch((err) => console.log(`Users table not created,  error ${err}`));
-
-Advertisements.sync({ alter: true })
-  .then(() => console.log("Advertisements table created successfully"))
-  .catch((err) =>
-    console.log(`Advertisements table not created,  error ${err}`)
-  );
-
-Contents.sync({ alter: true })
-  .then(() => console.log("Contents table created successfully"))
-  .catch((err) => console.log(`Contents table not created,  error ${err}`));
+excuteDb();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -56,14 +41,14 @@ app.use("/auth", authRoutes);
 
 app.use("/users", checkAuth, userRoutes);
 
-// OpenAPI routes
+app.use("/advertisements", checkAuth, advertisementRoutes);
+
 initialize({
   app,
   apiDoc: require("./api/api-doc"),
   paths: "./api/paths",
 });
 
-// OpenAPI UI
 app.use(
   "/api-documentation",
   swaggerUi.serve,
