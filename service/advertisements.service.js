@@ -110,9 +110,50 @@ const deleteContentById = async (id, urls) => {
   }
 };
 
+const updateContentById = async (id, contentId, url) => {
+  try {
+    const advertisement = await getAdvertisementById(id);
+    if (advertisement) {
+      const content = await Content.findOne({ where: { id: contentId } });
+
+      if (content && content.url !== url) {
+        await Content.update(
+          { url },
+          {
+            where: {
+              id: contentId,
+              advertisementId: id,
+            },
+          }
+        );
+
+        return responseMapper(200, {
+          advertisementId: id,
+          contentId,
+          updatedUrl: url,
+        });
+      } else
+        return responseMapper(
+          500,
+          null,
+          "Content unavailable or url value already exists"
+        );
+    } else
+      return responseMapper(
+        404,
+        null,
+        `Unable to find the advertisement with advertisementId: ${id}`
+      );
+  } catch (error) {
+    console.log(`AdvertisementService updateContentById error , ${error}`);
+    return errorResponse(error);
+  }
+};
+
 module.exports = {
   createAdvertisement,
   getAdvertisementById,
   getAdvertisements,
   deleteContentById,
+  updateContentById,
 };

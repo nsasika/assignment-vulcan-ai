@@ -4,6 +4,7 @@ const {
   getAdvertisements,
   getAdvertisementById,
   deleteContentById,
+  updateContentById,
 } = require("../service/advertisements.service");
 
 const addAdvertisement = async (req, res, next) => {
@@ -49,9 +50,24 @@ const deleteContent = async (req, res, next) => {
   }
 };
 
+const updateAdvertisementContent = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { contentId, url } = req.body;
+    const result = await updateContentById(id, contentId, url);
+    res.status(result.statusCode).json(result);
+  } catch (error) {
+    console.log(
+      `AdvertisementsController updateAdvertisementContent error , ${error}`
+    );
+    return errorResponse(error);
+  }
+};
+
 module.exports = {
   addAdvertisement,
   getAdvertisement,
   getAllAdvertisements,
   deleteContent,
+  updateAdvertisementContent,
 };
