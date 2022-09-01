@@ -41,4 +41,19 @@ const getAdvertisementById = async (id) => {
   }
 };
 
-module.exports = { createAdvertisement, getAdvertisementById };
+const getAdvertisements = async () => {
+  try {
+    const advertisements = await Advertisement.findAll({ include: [Content] });
+    if (advertisements) return responseMapper(200, advertisements);
+    else return responseMapper(500, "Unable to retrieve advertisements");
+  } catch (error) {
+    console.log(`AdvertisementService getAdvertisements error , ${error}`);
+    return errorResponse(error);
+  }
+};
+
+module.exports = {
+  createAdvertisement,
+  getAdvertisementById,
+  getAdvertisements,
+};

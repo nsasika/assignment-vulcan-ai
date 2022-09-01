@@ -1,5 +1,8 @@
 const { errorResponse } = require("../consts/response");
-const { createAdvertisement } = require("../service/advertisements.service");
+const {
+  createAdvertisement,
+  getAdvertisements,
+} = require("../service/advertisements.service");
 
 const addAdvertisement = async (req, res, next) => {
   try {
@@ -11,4 +14,14 @@ const addAdvertisement = async (req, res, next) => {
   }
 };
 
-module.exports = { addAdvertisement };
+const getAllAdvertisements = async (req, res, next) => {
+  try {
+    const advertisements = await getAdvertisements();
+    res.status(advertisements.statusCode).json(advertisements);
+  } catch (error) {
+    console.log(`AdvertisementsController getAdvertisements error , ${error}`);
+    return errorResponse(error);
+  }
+};
+
+module.exports = { addAdvertisement, getAllAdvertisements };
