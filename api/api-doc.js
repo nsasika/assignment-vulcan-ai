@@ -6,17 +6,53 @@ const apiDoc = {
     version: "1.0.0",
   },
   definitions: {
-    Todo: {
+    UserLogin: {
       type: "object",
       properties: {
-        id: {
-          type: "number",
+        username: {
+          type: "string",
         },
-        message: {
+        password: {
           type: "string",
         },
       },
       required: ["id", "message"],
+    },
+    RegisterUser: {
+      type: "object",
+      properties: {
+        username: {
+          type: "string",
+        },
+        password: {
+          type: "string",
+        },
+        email: {
+          type: "string",
+        },
+        address: {
+          type: "string",
+        },
+      },
+      required: ["username", "password", "email", "address"],
+    },
+    CreateAdvertisement: {
+      type: "object",
+      properties: {
+        email: {
+          type: "string",
+        },
+        title: {
+          type: "string",
+        },
+        description: {
+          type: "string",
+        },
+        contents: {
+          type: "array",
+        },
+      },
+      required: ["email", "title", "description", "contents"],
     },
   },
   paths: {},

@@ -29,16 +29,28 @@ module.exports = function () {
   }
 
 
+  GET.apiDoc = {
+    summary: "Get Advertisements",
+    operationId: "get-advertisemets",
+    consumes: ["application/json"],
+    responses: {
+      200: {
+        description: "Success",
+      },
+    },
+  };
+
+
   POST.apiDoc = {
-    summary: "Login User",
-    operationId: "user-login",
+    summary: "Create Advertisement",
+    operationId: "create-advertisement",
     consumes: ["application/json"],
     parameters: [
       {
         in: "body",
         name: "Request body",
         schema: {
-          $ref: "#/definitions/UserLogin",
+          $ref: "#/definitions/CreateAdvertisement",
         },
       },
     ],

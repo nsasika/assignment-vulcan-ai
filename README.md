@@ -62,3 +62,24 @@ npm start
 ## REST API Documentation
 
 http://localhost:8000/api-documentation/#/
+
+baseUrl - http://localhost:8000
+
+```bash
+Create an advertisement - baseUrl/advertisements ( title - title of add, description - description of add, email - user email, contents - [array of image urls(string)])
+- POST
+- body : {email, title, description, contents}
+```
+
+```bash
+Get an advertisement  - baseUrl/advertisements/:id (id - advertisement id)
+```
+```bash
+Update a content (image) of an advertisement - baseUrl/id  (id - advertisement id, contentId - content id, url - image ur)
+- PATCH 
+- body : {contentId, url}
+```
+```bash
+Delete a content (image) of an advertisement - baseUrl/id  (id - advertisement id, urls - image url array)
+- PATCH 
+- body : {urls}
