@@ -4,8 +4,8 @@ const util = require("../utils/util");
 class UsersController {
   static async getAllUsers(req, res, next) {
     try {
-      const { status, data, error } = await UsersService.getAllUsers();
-      util.checkAndReturnResponse(res, status, data, error);
+      const result = await UsersService.getAllUsers();
+      res.status(result.statusCode).json(result);
     } catch (error) {
       console.log(`UsersController getAllUsers error , ${error}`);
       res.status(500).json({ error: error.message });

@@ -1,10 +1,15 @@
-const { errorResponse, successResponse } = require("../consts/response");
+const {
+  errorResponse,
+  successResponse,
+  responseMapper,
+} = require("../consts/response");
 const User = require("../models/users");
 
 const getAllUsers = async () => {
   try {
     const users = await User.findAll();
-    return successResponse(users);
+    if (users) return responseMapper(200, { users, totalUsers: users.length });
+    else return responseMapper(404, null, "No users found");
   } catch (error) {
     console.log(`UsersService getAllUsers error , ${error}`);
     return errorResponse(error);
