@@ -3,6 +3,7 @@ const {
   createAdvertisement,
   getAdvertisements,
   getAdvertisementById,
+  deleteContentById,
 } = require("../service/advertisements.service");
 
 const addAdvertisement = async (req, res, next) => {
@@ -36,4 +37,21 @@ const getAdvertisement = async (req, res, next) => {
   }
 };
 
-module.exports = { addAdvertisement, getAdvertisement, getAllAdvertisements };
+const deleteContent = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { urls } = req.body;
+    const result = await deleteContentById(id, urls);
+    res.status(result.statusCode).json(result);
+  } catch (error) {
+    console.log(`AdvertisementsController deleteContent error , ${error}`);
+    return errorResponse(error);
+  }
+};
+
+module.exports = {
+  addAdvertisement,
+  getAdvertisement,
+  getAllAdvertisements,
+  deleteContent,
+};

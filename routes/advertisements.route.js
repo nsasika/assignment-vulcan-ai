@@ -7,6 +7,9 @@ router
   .get(AdvertisementsCtrl.getAllAdvertisements)
   .post(AdvertisementsCtrl.addAdvertisement);
 
-router.route("/:id").get(AdvertisementsCtrl.getAdvertisement);
+router
+  .route("/:id")
+  .get(AdvertisementsCtrl.getAdvertisement)
+  .delete(AdvertisementsCtrl.deleteContent);
 
 module.exports = router;
