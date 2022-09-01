@@ -79,8 +79,40 @@ const getAdvertisements = async () => {
   }
 };
 
+const deleteContentById = async (id, urls) => {
+  try {
+    const advertisement = await getAdvertisementById(id);
+    if (advertisement) {
+      const res = await Content.destroy({
+        where: {
+          advertisementId: id,
+          url: [urls],
+        },
+      });
+
+      if (res > 0) return responseMapper(200, { deletedUrls: urls });
+      if (res === 0)
+        return responseMapper(
+          500,
+          null,
+          "selected urls already has been deleted"
+        );
+      return responseMapper(500, null, `Unable to delete content/s`);
+    } else
+      responseMapper(
+        404,
+        null,
+        `Unable to find the advertisement with advertisementId: ${id}`
+      );
+  } catch (error) {
+    console.log(`AdvertisementService deleteContentById error , ${error}`);
+    return errorResponse(error);
+  }
+};
+
 module.exports = {
   createAdvertisement,
   getAdvertisementById,
   getAdvertisements,
+  deleteContentById,
 };
