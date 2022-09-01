@@ -13,7 +13,13 @@ const Advertisement = db.define("advertisement", {
   },
 });
 
-Advertisement.hasMany(Content);
-Content.belongsTo(Advertisement);
+Advertisement.hasMany(Content, {
+  foreignKey: { allowNull: false },
+  onDelete: "CASCADE",
+});
+Content.belongsTo(Advertisement, {
+  foreignKey: { allowNull: false },
+  onDelete: "CASCADE",
+});
 
 module.exports = Advertisement;

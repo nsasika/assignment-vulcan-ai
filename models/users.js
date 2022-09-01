@@ -23,7 +23,13 @@ const User = db.define("user", {
   },
 });
 
-User.hasMany(Advertisement);
-Advertisement.belongsTo(User);
+User.hasMany(Advertisement, {
+  foreignKey: { allowNull: false },
+  onDelete: "CASCADE",
+});
+Advertisement.belongsTo(User, {
+  foreignKey: { allowNull: false },
+  onDelete: "CASCADE",
+});
 
 module.exports = User;
