@@ -7,4 +7,6 @@ router
   .get(AdvertisementsCtrl.getAllAdvertisements)
   .post(AdvertisementsCtrl.addAdvertisement);
 
+router.route("/:id").get(AdvertisementsCtrl.getAdvertisement);
+
 module.exports = router;
